@@ -2,28 +2,21 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import config from '../utils/siteConfig'
 import PageBody from '../components/PageBody'
-import SEO from '../components/SEO'
 import Hero from '../components/Hero'
 import Layout from '../components/layout'
+import IntroPitch from '../components/IntroPitch/index'
 
 const PageTemplate = ({ data }) => {
-  const { title, heroImage, content } = data.contentfulPage
-  const postNode = data.contentfulPage
+  const { title, heroImage, intro, descriptions, content } = data.contentfulPage
 
   return (
     <Layout>
       <Helmet>
         <title>{`${title} - ${config.siteTitle}`}</title>
       </Helmet>
-      <SEO pagePath={slug} postNode={postNode} pageSEO />
       <Hero title={title} image={heroImage} />
-
-      <Section>
-        <Grid>
-          <IntroPitch intro={intro} descriptions={descriptions} />
-          <PageBody content={content} />
-        </Grid>
-      </Section>
+      <IntroPitch intro={intro} descriptions={descriptions} />
+      <PageBody content={content} />
     </Layout>
   )
 }

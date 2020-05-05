@@ -8,7 +8,6 @@ import IntroPitch from '../components/IntroPitch/index'
 import PageBody from '../components/PageBody'
 
 const AboutPage = ({ data }) => {
-  console.log(data)
   return (
     <>
       <Layout>

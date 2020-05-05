@@ -9,7 +9,6 @@ import Card from '../components/Card/Card'
 import { Grid, Section } from '../components/Globals/index.style'
 import FeaturedCard from '../components/FeaturedCard/index'
 import CallToAction from '../components/CallToAction/index'
-import ContactForm from '../components/ContactForm'
 
 const Index = ({ data }) => {
   const products = data.allContentfulProducts.edges
