@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import config from '../utils/siteConfig'
 import PageBody from '../components/PageBody'
-import Hero from '../components/Hero'
+import { Hero } from '../components/Hero'
 import Layout from '../components/layout'
 import IntroPitch from '../components/IntroPitch/index'
 
@@ -21,8 +21,6 @@ const PageTemplate = ({ data }) => {
     </Layout>
   )
 }
-
-export default PageTemplate
 
 export const query = graphql`
   query pageQuery {
@@ -50,3 +48,4 @@ export const query = graphql`
     }
   }
 `
+export default PageTemplate

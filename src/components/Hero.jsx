@@ -52,7 +52,7 @@ const Title = styled.h1`
 
 const Hero = (props) => (
   <Wrapper>
-    <BgImg height={props.height} sizes={props.image.sizes} />
+    <BgImg sizes={props.image.sizes} />
     <Title>{props.title}</Title>
   </Wrapper>
 )
