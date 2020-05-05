@@ -1,87 +1,161 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
-import { Helmet } from 'react-helmet'
-import Hero from '../components/hero'
 import Layout from '../components/layout'
-import ArticlePreview from '../components/article-preview'
+import PageBanner from '../components/PageBanner/index'
+import IntroPitch from '../components/IntroPitch/index'
+import CardList from '../components/Card/CardList'
+import Card from '../components/Card/Card'
+import { Grid, Section } from '../components/Globals/index.style'
+import FeaturedCard from '../components/FeaturedCard/index'
+import CallToAction from '../components/CallToAction/index'
+import ContactForm from '../components/ContactForm'
 
-class RootIndex extends React.Component {
-  render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const posts = get(this, 'props.data.allContentfulBlogPost.edges')
-    const [author] = get(this, 'props.data.allContentfulPerson.edges')
+const Index = ({ data }) => {
+  const products = data.allContentfulProducts.edges
 
-    return (
-      <Layout location={this.props.location}>
-        <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
-          <Hero data={author.node} />
-          <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
-            <ul className="article-list">
-              {posts.map(({ node }) => {
-                return (
-                  <li key={node.slug}>
-                    <ArticlePreview article={node} />
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
+  return (
+    <>
+      <Layout>
+        <PageBanner
+          image={data.allContentfulBanner.edges[0].node.image.file.url}
+          title={data.allContentfulBanner.edges[0].node.title}
+          subtitle={data.allContentfulBanner.edges[0].node.subtitle}
+        />
+        <Section>
+          <Grid>
+            <IntroPitch
+              intro={data.allContentfulIntroduction.edges[0].node.title}
+              descriptions={
+                data.allContentfulIntroduction.edges[0].node.descriptions
+              }
+            />
+          </Grid>
+        </Section>
+        <Section>
+          <Grid>
+            <CardList>
+              {products.map(({ node: product }) => (
+                <Card
+                  key={product.id}
+                  slug={product.slug}
+                  image={product.heroImage}
+                  title={product.title}
+                  excerpt={product.descriptions}
+                />
+              ))}
+            </CardList>
+          </Grid>
+        </Section>
+        <Section>
+          <CallToAction
+            title={data.allContentfulCallToAll.edges[0].node.title}
+            descriptions={
+              data.allContentfulCallToAll.edges[0].node.descriptions
+            }
+            actionText={data.allContentfulCallToAll.edges[0].node.actionText}
+          />
+        </Section>
+        <Section>
+          <Grid>
+            <FeaturedCard
+              title={data.allContentfulFeaturedCard.edges[0].node.title}
+              image={data.allContentfulFeaturedCard.edges[0].node.heroImage}
+              descriptions={
+                data.allContentfulFeaturedCard.edges[0].node.descriptions
+              }
+            />
+          </Grid>
+        </Section>
       </Layout>
-    )
-  }
+    </>
+  )
 }
 
-export default RootIndex
+export default Index
 
 export const pageQuery = graphql`
-  query HomeQuery {
+  query LandingPageQuery {
     site {
       siteMetadata {
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
+    allContentfulBanner {
+      edges {
+        node {
+          image {
+            file {
+              url
+            }
+          }
+          subtitle
+          title
+        }
+      }
+    }
+    allContentfulIntroduction {
       edges {
         node {
           title
-          slug
-          publishDate(formatString: "MMMM Do, YYYY")
-          tags
-          heroImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
-          }
-          description {
+          descriptions {
             childMarkdownRemark {
               html
+              excerpt(pruneLength: 80)
             }
           }
         }
       }
     }
-    allContentfulPerson(
-      filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }
-    ) {
+    allContentfulFeaturedCard {
       edges {
         node {
-          name
-          shortBio {
-            shortBio
-          }
           title
-          heroImage: image {
-            fluid(
-              maxWidth: 1180
-              maxHeight: 480
-              resizingBehavior: PAD
-              background: "rgb:000000"
-            ) {
-              ...GatsbyContentfulFluid_tracedSVG
+          descriptions {
+            childMarkdownRemark {
+              html
+              excerpt(pruneLength: 80)
+            }
+          }
+          heroImage {
+            sizes(maxWidth: 380, resizingBehavior: SCALE) {
+              ...GatsbyContentfulSizes_withWebp_noBase64
+            }
+          }
+        }
+      }
+    }
+    allContentfulCallToAll {
+      edges {
+        node {
+          title
+          descriptions {
+            childMarkdownRemark {
+              html
+              excerpt(pruneLength: 80)
+            }
+          }
+          actionText
+        }
+      }
+    }
+    allContentfulProducts {
+      edges {
+        node {
+          title
+          id
+          slug
+          intro
+          descriptions {
+            childMarkdownRemark {
+              html
+              excerpt(pruneLength: 80)
+            }
+          }
+          heroImage {
+            title
+            sizes(maxWidth: 1800) {
+              ...GatsbyContentfulSizes_withWebp_noBase64
             }
           }
         }

@@ -2,12 +2,11 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import get from 'lodash/get'
-import Img from 'gatsby-image'
 import Layout from '../components/layout'
-
 import heroStyles from '../components/hero.module.css'
+import PageBanner from '../components/PageBanner/index'
 
-class BlogPostTemplate extends React.Component {
+class ProductTemplate extends React.Component {
   render() {
     const post = get(this.props, 'data.contentfulBlogPost')
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
@@ -17,10 +16,10 @@ class BlogPostTemplate extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={`${post.title} | ${siteTitle}`} />
           <div className={heroStyles.hero}>
-            <Img
-              className={heroStyles.heroImage}
-              alt={post.title}
-              fluid={post.heroImage.fluid}
+            <PageBanner
+              image={data.allContentfulBanner.edges[0].node.image.file.url}
+              title={data.allContentfulBanner.edges[0].node.title}
+              subtitle={data.allContentfulBanner.edges[0].node.subtitle}
             />
           </div>
           <div className="wrapper">
@@ -44,28 +43,4 @@ class BlogPostTemplate extends React.Component {
   }
 }
 
-export default BlogPostTemplate
-
-export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    contentfulBlogPost(slug: { eq: $slug }) {
-      title
-      publishDate(formatString: "MMMM Do, YYYY")
-      heroImage {
-        fluid(maxWidth: 1180, background: "rgb:000000") {
-          ...GatsbyContentfulFluid_tracedSVG
-        }
-      }
-      body {
-        childMarkdownRemark {
-          html
-        }
-      }
-    }
-  }
-`
+export default ProductTemplate
