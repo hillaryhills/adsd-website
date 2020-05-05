@@ -22,6 +22,8 @@ const PageTemplate = ({ data }) => {
   )
 }
 
+export default PageTemplate
+
 export const query = graphql`
   query pageQuery {
     contentfulPage {
@@ -48,5 +50,3 @@ export const query = graphql`
     }
   }
 `
-
-export default PageTemplate

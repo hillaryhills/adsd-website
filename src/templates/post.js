@@ -33,6 +33,8 @@ const PostTemplate = ({ data }) => {
   )
 }
 
+export default PostTemplate
+
 export const pageQuery = graphql`
   query PostQuery($slug: String!) {
     contentfulProducts(slug: { eq: $slug }) {
@@ -61,5 +63,3 @@ export const pageQuery = graphql`
     }
   }
 `
-
-export default PostTemplate
