@@ -1,6 +1,5 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import get from 'lodash/get'
 import Layout from '../components/layout'
 import PageBanner from '../components/PageBanner/index'
 import { Grid, Section } from '../components/Globals/index.style'

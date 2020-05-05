@@ -6,7 +6,7 @@ import IntroPitch from '../components/IntroPitch/index'
 import PageBody from '../components/PageBody'
 import Layout from '../components/layout'
 import { Grid, Section } from '../components/Globals/index.style'
-import { Hero } from '../components/Hero'
+import Hero from '../components/Hero'
 
 const PostTemplate = ({ data }) => {
   const {
