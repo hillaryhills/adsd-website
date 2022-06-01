@@ -25,7 +25,7 @@
         "react-dom": "^16.13.1",
         "react-flexbox-grid": "^2.1.2",
         "react-helmet": "^6.0.0",
-        "sharp": "^0.25.2",
+        "sharp": "^0.30.5",
         "styled-components": "^5.1.0"
     },
     "devDependencies": {
